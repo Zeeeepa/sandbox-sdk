@@ -1,0 +1,59 @@
+# CI/CD Engine Worker Configuration
+
+name = "ci-cd-engine"
+main = "src/index.ts"
+compatibility_date = "2024-01-01"
+
+# Account and workers configuration
+workers_dev = true
+
+# Durable Objects
+[[durable_objects.bindings]]
+name = "SANDBOX"
+class_name = "Sandbox"
+script_name = "ci-cd-engine"
+
+# R2 Buckets for state and cache
+[[r2_buckets]]
+binding = "CI_STATE_BUCKET"
+bucket_name = "ci-cd-state"
+preview_bucket_name = "ci-cd-state-preview"
+
+[[r2_buckets]]
+binding = "CI_CACHE_BUCKET"
+bucket_name = "ci-cd-cache"
+preview_bucket_name = "ci-cd-cache-preview"
+
+# KV Namespaces for queue and metrics
+[[kv_namespaces]]
+binding = "CI_QUEUE_KV"
+id = "placeholder_queue_kv_id"
+preview_id = "placeholder_queue_kv_preview_id"
+
+[[kv_namespaces]]
+binding = "CI_METRICS_KV"
+id = "placeholder_metrics_kv_id"
+preview_id = "placeholder_metrics_kv_preview_id"
+
+# Analytics Engine (optional)
+[[analytics_engine_datasets]]
+binding = "CI_ANALYTICS"
+
+# Cron triggers for job processing and maintenance
+[triggers]
+crons = [
+  "*/1 * * * *",  # Process queue every minute
+  "0 * * * *"     # Maintenance every hour
+]
+
+# Resource limits
+[limits]
+cpu_ms = 30000
+
+# Build configuration
+[build]
+command = "npm run build"
+
+[build.upload]
+format = "service-worker"
+
