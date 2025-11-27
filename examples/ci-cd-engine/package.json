@@ -1,0 +1,25 @@
+{
+  "name": "ci-cd-engine",
+  "version": "1.0.0",
+  "description": "CI/CD orchestration engine built on Cloudflare Sandbox SDK",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "build": "tsc",
+    "tail": "wrangler tail",
+    "test": "vitest"
+  },
+  "dependencies": {
+    "@cloudflare/sandbox": "workspace:*",
+    "@repo/shared": "workspace:*"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20241127.0",
+    "typescript": "^5.7.2",
+    "wrangler": "^3.101.0",
+    "vitest": "^2.1.8"
+  }
+}
+
